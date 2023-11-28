@@ -24,12 +24,6 @@ class Solution {
         answer += (map.getOrDefault('C', 0) >= map.getOrDefault('F', 0)) ? 'C' : 'F';
         answer += (map.getOrDefault('J', 0) >= map.getOrDefault('M', 0)) ? 'J' : 'M';
         answer += (map.getOrDefault('A', 0) >= map.getOrDefault('N', 0)) ? 'A' : 'N';
-        
-        for(Character s : map.keySet()){
-            System.out.println(s);
-        }
-        
-        // choices 1 ~ 3은 survey 앞 글자의 점수를 3 ~ 1점 추가, 5 ~ 7은 반대.
         return answer;
     }
 }
