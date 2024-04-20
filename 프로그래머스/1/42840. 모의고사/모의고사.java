@@ -21,17 +21,10 @@ class Solution {
             answer[0] = 1; answer[1] = 2; answer[2] = 3;
             return answer;
         }
-        else if (res == one_ans) {
-            list.add(1);
-        }
         
-        if (res == two_ans) {
-            list.add(2);
-        }
-        
-        if (res == three_ans) {
-            list.add(3);
-        }
+        if (res == one_ans) list.add(1);
+        if (res == two_ans) list.add(2);
+        if (res == three_ans) list.add(3);
         
         int[] answer = new int[list.size()];
         for(int i = 0; i < answer.length; i++) answer[i] = list.get(i);
