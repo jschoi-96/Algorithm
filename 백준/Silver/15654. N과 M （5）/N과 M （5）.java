@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Main {
 
-    static int n, m;
+    static int m, n;
     static int [] arr;
-    static int [] tmp;
-    static boolean [] visited;
+    static int [] tmp = new int[10];
+    static boolean[] visited = new boolean[10000];
     static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,33 +17,33 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
 
         arr = new int[n];
-        tmp = new int[m];
-        visited = new boolean[10];
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
         Arrays.sort(arr);
-        dfs( 0);
-        System.out.print(sb);
+
+        recur(0);
+        System.out.println(sb.toString());
     }
 
-    public static void dfs(int depth) {
+    private static void recur(int depth) {
         if (depth == m) {
-            for(int i = 0; i < depth; i++){
+            for(int i = 0; i < m; i++){
                 sb.append(tmp[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
-        for(int i = 0; i < n; i++) {
-            if (!visited[i]) {
+        for(int i = 0; i < n; i++){
+            if (!visited[arr[i]]) {
+                visited[arr[i]] = true;
                 tmp[depth] = arr[i];
-                visited[i] = true;
-                dfs(depth + 1);
-                visited[i] = false;
+                recur(depth + 1);
+                visited[arr[i]] = false;
             }
         }
     }
+
 }
