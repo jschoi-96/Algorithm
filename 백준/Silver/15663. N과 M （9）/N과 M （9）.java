@@ -10,7 +10,6 @@ public class Main {
     static int [] tmp;
     static boolean[] visited = new boolean[10];
     static StringBuilder sb = new StringBuilder();
-    static Set<String> set = new LinkedHashSet<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -26,29 +25,28 @@ public class Main {
 
         Arrays.sort(arr);
         recur(0);
-        for (String s : set) {
-            System.out.println(s);
-        }
+        System.out.println(sb.toString());
     }
 
     private static void recur(int depth) {
         if (depth == m) {
-            String res = "";
             for(int i = 0; i < depth; i++){
-               res += tmp[i] + " ";
+                sb.append(tmp[i]).append(" ");
             }
-            set.add(res);
+            sb.append("\n");
             return;
         }
 
+        int prev = 0;
         for(int i = 0; i < n; i++){
-            if (!visited[i]){
+            if (visited[i]) continue;
+            else if (prev != arr[i]) {
                 visited[i] = true;
                 tmp[depth] = arr[i];
+                prev = arr[i];
                 recur(depth + 1);
                 visited[i] = false;
             }
-
         }
     }
 }
