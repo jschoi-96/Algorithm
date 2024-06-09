@@ -8,17 +8,18 @@ public class Main {
     static int n, m;
     static List<List<Integer>> graph = new ArrayList<>();
     static boolean [] visited;
+    static int cnt = 0;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         m = Integer.parseInt(br.readLine());
 
-        for(int i = 0; i <= n; i++){
+        for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
         }
         visited = new boolean[n + 1];
 
-        for(int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
@@ -26,24 +27,18 @@ public class Main {
             graph.get(v).add(u);
         }
 
-        int cnt = 0;
-        Queue<Integer> queue = new LinkedList<>();
-        for(int i = 1; i <= n; i++) {
-            queue.add(i);
-            visited[i] = true;
+        dfs(1);
+        System.out.println(cnt);
+    }
 
-            while(!queue.isEmpty()) {
-                int node = queue.poll();
-                for(int next : graph.get(node)) {
-                    if (visited[next]) continue;
-                    queue.add(next);
-                    visited[next] = true;
-                }
+    public static void dfs(int node) {
+        visited[node] = true;
+
+        for(int next : graph.get(node)) {
+            if (!visited[next]){
                 cnt++;
+                dfs(next);
             }
-
-            System.out.println(cnt - 1);
-            return;
         }
     }
 }
