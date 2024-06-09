@@ -5,10 +5,10 @@ class Solution {
     static int answer = 0;
     public int solution(int n, int[][] computers) {
         
-        for(int i = 0; i <= n; i++){
+        for(int i = 0; i < n; i++){
             graph.add(new ArrayList<>());
         }
-        visited = new boolean[n + 1];
+        visited = new boolean[n];
         
         for(int i = 0; i < computers.length; i++) {
             for(int j = i + 1; j < computers[i].length; j++) {
@@ -19,26 +19,25 @@ class Solution {
             }
         }
         
-        for(int i = 0; i <= n; i++) {
+        for(int i = 0; i < n; i++) {
             if (!visited[i]) {
                 bfs(i);
+                answer++;
             }
         }
         
-        return answer - 1;
+        return answer;
     }
     
     public void bfs(int start) {
         visited[start] = true;
         Queue<Integer> queue = new LinkedList<>();
-        answer++;
-        
+      
         queue.add(start);
         while(!queue.isEmpty()) {
             int node = queue.poll();
             for(int next : graph.get(node)) {
                 if (visited[next]) continue;
-                System.out.println(next);
                 visited[next] = true;
                 queue.add(next);
             }
