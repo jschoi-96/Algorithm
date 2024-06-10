@@ -1,22 +1,24 @@
 class Solution {
-    // current라는 현재값을
     static boolean [] visited;
-    static int ans = 0;
+    static int answer = 0;
     public int solution(int k, int[][] dungeons) {
-        visited = new boolean[dungeons.length];
-        dfs(k, dungeons, 0);
-        return ans;
+        visited = new boolean[k];
+        dfs(k, dungeons, visited, 0);
+        return answer;
     }
     
-    public void dfs(int k, int[][] dungeons, int count) {
-        ans = Math.max(ans, count);
-        
+    public void dfs(int cur, int [][] dungeons, boolean [] visited, int depth) {
+        answer = Math.max(answer, depth);
         for(int i = 0; i < dungeons.length; i++) {
-            if (!visited[i] && k >= dungeons[i][0]) {
+            int min = dungeons[i][0];
+            int consume = dungeons[i][1];
+            if (!visited[i] && cur >= min) { // 방문하지 않았고, 현재 피로도가 최소 필요 피로도보다 높을 떄
                 visited[i] = true;
-                dfs(k - dungeons[i][1], dungeons, count + 1);
+                dfs(cur - consume, dungeons, visited, depth + 1);
                 visited[i] = false;
             }
         }
+        
+        //System.out.println(cnt);
     }
 }
