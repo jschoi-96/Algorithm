@@ -10,39 +10,26 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        int [] arr = new int[n + 1];
+        int [] arr = new int[n];
+
 
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(br.readLine());
         }
-
         Arrays.sort(arr);
+
         int min = Integer.MAX_VALUE;
-        for(int i = 0; i < n; i++) {
-            int lo = i;
-            int hi = n;
-            int target = arr[lo] + m;
 
-            while(lo <= hi) {
-                int mid = lo + (hi - lo) / 2;
-                if (arr[mid] < target) { // arr[mid]를 더 크게
-                    lo = mid + 1;
-                }
+        int hi = 0;
+        for(int lo = 0; lo < n; lo++) {
 
-                else {
-                    hi = mid - 1;
-                }
+            while(hi < n && arr[hi] - arr[lo] < m) hi++;
 
-                int res = Math.abs(arr[hi] - arr[i]);
-                if (res >= m) {
-                    min = Math.min(res, min);
-                }
-
-                if (res == m) break;
-            }
+            if (hi == n) break;
+            min = Math.min(min, arr[hi] - arr[lo]);
         }
-        System.out.println(min);
 
+        System.out.println(min);
     }
 }
 
