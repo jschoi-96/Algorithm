@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
     static int n, m;
@@ -10,26 +11,24 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
+
+
         int [] arr = new int[n];
-
-
+        int min = Integer.MAX_VALUE;
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(br.readLine());
         }
         Arrays.sort(arr);
 
-        int min = Integer.MAX_VALUE;
-
         int hi = 0;
         for(int lo = 0; lo < n; lo++) {
-
-            while(hi < n && arr[hi] - arr[lo] < m) hi++;
+            while(hi < n && Math.abs(arr[hi] - arr[lo]) < m) {
+                hi++;
+            }
 
             if (hi == n) break;
-            min = Math.min(min, arr[hi] - arr[lo]);
+            min = Math.min(min, Math.abs(arr[hi] - arr[lo]));
         }
-
         System.out.println(min);
     }
 }
-
