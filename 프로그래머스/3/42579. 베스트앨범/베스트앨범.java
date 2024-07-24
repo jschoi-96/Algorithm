@@ -1,47 +1,43 @@
 import java.util.*;
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
-        int[] answer = {};
-        // 1. 장르 수록
+        
         Map<String, Integer> genreMap = new HashMap<>();
+        
         for(int i = 0; i < genres.length; i++) {
             genreMap.put(genres[i], genreMap.getOrDefault(genres[i], 0) + plays[i]);
         }
         
-        // 장르 재생 순서가 많은대로 내림차순
-        List<String> genreKey = new ArrayList<>(genreMap.keySet()); // keySet 기준으로 내림차순
-        genreKey.sort((a,b) -> genreMap.get(b) - genreMap.get(a));
+        List<String> mostPlays = new ArrayList<>(genreMap.keySet());
+        
+        Collections.sort(mostPlays, (a,b) -> genreMap.get(b) - genreMap.get(a)); // 장르 순서대로 내림차순
         
         
-        List<Integer> result = new ArrayList<>();
-        int idx = 0;
-        
-        for(String genre : genreKey) {
-            Map<Integer,Integer> playsMap = new HashMap<>();
-            for(int i = 0; i < genres.length; i++) {
-                if (genre.equals(genres[i])) {
-                    playsMap.put(i, plays[i]);
+        List<Integer> res = new ArrayList<>();
+
+        for(String play : mostPlays) {
+            
+            Map<Integer, Integer> playMap = new HashMap<>();
+
+            for (int i = 0; i < genres.length; i++) {
+                
+                if (play.equals(genres[i])) {
+                    playMap.put(i, plays[i]);
                 }
             }
             
-            List<Integer> playsList = new ArrayList<>(playsMap.keySet()); // index로 리스트를 만든 후에
-            playsList.sort((a,b) -> playsMap.get(b) - playsMap.get(a));
+            List<Integer> index = new ArrayList<>(playMap.keySet()); // 4,1,3,0...
             
-                        
-            if (playsList.size() == 1) {
-                result.add(playsList.get(0));
-            }
+            Collections.sort(index, (a,b) -> playMap.get(b) - playMap.get(a));
+            //for(int in: index) System.out.println(in);
+            res.add(index.get(0));
+            if (index.size() > 1) res.add(index.get(1));
             
-            else {
-                 result.add(playsList.get(0));
-                 result.add(playsList.get(1));
-            }
+            
         }
-        
-        int [] ans = new int [result.size()];
-        for(int i = 0; i < result.size(); i++) {
-            ans[i] = result.get(i);
-        }
-        return ans;
+                
+        int [] arr_res = new int[res.size()];
+        for(int i = 0; i < res.size(); i++) arr_res[i] = res.get(i);
+        return arr_res;
     }
 }
