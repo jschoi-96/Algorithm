@@ -3,22 +3,19 @@ class Solution {
     public String solution(String[] participant, String[] completion) {
         String answer = "";
         
-        Map<String, Integer> map = new HashMap<>();
-        for(String p : participant) {
-            map.put(p, map.getOrDefault(p, 0) + 1);
-        }
+        Arrays.sort(participant);
+        Arrays.sort(completion);
         
-        for(String c : completion) {
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) - 1);
+        int n = completion.length;
+        
+        for(int i = 0; i < n; i++) {
+            // System.out.println(participant[i] + " " + completion[i]);
+            if (!completion[i].equals(participant[i])) {
+                return participant[i];
             }
         }
         
-        for(String key : map.keySet()) {
-            if (map.get(key) != 0) {
-                return key;
-            }
-        }
-        return answer;
+        
+        return participant[n];
     }
 }
