@@ -40,7 +40,7 @@ public class Main {
         while(!pq.isEmpty()) {
             Node cur = pq.poll();
 
-
+            if (dist[cur.idx] < cur.cost) continue;
 
             for(int i = 0; i < graph.get(cur.idx).size(); i++) {
                 Node nxt = graph.get(cur.idx).get(i);
