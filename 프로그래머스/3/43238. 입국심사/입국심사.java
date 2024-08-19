@@ -1,28 +1,30 @@
 import java.util.*;
 class Solution {
-    public long solution(int n, int[] times) {
-        long answer = 0;
+    public long solution(int n, int[] times) {        
+        long max = 0;
+        for(int t : times) if (t > max) max = t;
         
-        Arrays.sort(times);
-        long min = 1;
-        long max = times[times.length - 1] * (long)n;
+        long lo = 1;
+        long hi = max * n; // 최댓값;
         
-        while (min <= max) {
-            long mid = (min + max) / 2; // 시간 
-            long tmp = 0;
+        while(lo <= hi) {
+            long mid = lo + (hi - lo) / 2;
             
-            for(int i = 0; i < times.length; i++) {
-                tmp += (mid / times[i]);
+            long total = 0;
+            for(int time : times) {
+                total += (mid / time);
             }
-           
-            if (tmp >= n) {
-                max = mid - 1;
-                answer = mid;
-                //System.out.println(mid);
+            
+            System.out.println(total);
+            
+            if (total < n) { // 한명의 사람을 더 받을 수 있기 때문에 mid값을 키워서 
+                lo = mid + 1;
             }
-            else min = mid + 1;
-                        
-        }        
-        return answer;
+            else {
+                hi = mid - 1;
+            }
+        }
+        
+        return lo;
     }
 }
