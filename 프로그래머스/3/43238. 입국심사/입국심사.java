@@ -15,7 +15,6 @@ class Solution {
                 total += (mid / time);
             }
             
-            System.out.println(total);
             
             if (total < n) { // 한명의 사람을 더 받을 수 있기 때문에 mid값을 키워서 
                 lo = mid + 1;
