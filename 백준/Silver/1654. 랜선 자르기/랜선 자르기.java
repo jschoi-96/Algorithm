@@ -5,12 +5,8 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    /*
-
-     */
     static int k, n;
     static int [] arr;
-    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -19,32 +15,32 @@ public class Main {
 
         arr = new int[k];
 
-        long max = 0;
-        for(int i = 0; i < k; i++){
+        for(int i = 0; i < k; i++) {
             arr[i] = Integer.parseInt(br.readLine());
-            if (arr[i] > max) max = arr[i];
         }
 
-        long min = 0;
-        max++;
+        Arrays.sort(arr); // nlog(n)
+        // 4 + 3 + 2 + 2
 
-        while(min < max) {
-            long mid = (min + max) / 2;
+        long lo = 0; // 랜선의 길이 최댓값이 2^31 -1
+        long hi = arr[k-1];
+        hi++;
+
+        while(lo < hi) {
+            long mid = (lo + hi) / 2;
             long result = 0;
-
             for(int i = 0; i < arr.length; i++) {
                 result += (arr[i] / mid);
             }
 
-            if (result < n) { // 현재 res가 n보다 작다는 것은, 상한을 낮춰야 함.
-                max = mid;
+            if (result < n) { // n보다 작다는 뜻은 상한선을 낮춰서 자르는 갯수를 더 많이 생성해야 함
+                hi = mid;
             }
 
             else {
-                min = mid + 1;
+                lo = mid + 1;
             }
         }
-
-        System.out.println(min - 1);
+        System.out.println(lo - 1);
     }
 }
