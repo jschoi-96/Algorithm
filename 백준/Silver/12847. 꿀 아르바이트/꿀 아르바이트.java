@@ -21,18 +21,15 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        long res = 0;
-        
-        for(int i = 0; i < m; i++) {
-            res += arr[i];
+        long window = 0;
+        long max = 0;
+        for(int i = 0; i < n; i++) {
+            window += arr[i];
+            if (i >= m - 1) {
+                max = Math.max(max, window);
+                window -= arr[i - (m-1)];
+            }
         }
-
-        long tmp = res;
-        for(int i = m; i < n; i++) { // 2일부터 4일
-            tmp += arr[i] - arr[i-m]; //
-            res = Math.max(res, tmp);
-        }
-
-        System.out.println(res);
+        System.out.println(max);
     }
 }
