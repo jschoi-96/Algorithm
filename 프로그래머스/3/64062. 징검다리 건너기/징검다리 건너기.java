@@ -6,7 +6,6 @@ class Solution {
         
         while(st <= en) {
             int mid = st + (en - st) / 2;
-            // System.out.println("mid: " + mid);
             
             int max = 0;
             int len = 1;
@@ -15,12 +14,12 @@ class Solution {
                     len++;
                 }
                 
-                else {
+                else { // 연속된 길이를 초기화 해준다 
                     len = 1;
                 }
                 max = Math.max(max, len);
             }
-            // System.out.println("max: " + max);
+            //System.out.println("mid: " + mid + " max: " + max);
 
             if (max <= k) {
                 st = mid + 1;
