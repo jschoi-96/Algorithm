@@ -1,41 +1,32 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
-
+import java.io.*;
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int n;
+    static StringBuilder sb = new StringBuilder();
 
-        StringBuilder sb = new StringBuilder();
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> {
-            int abs1 = Math.abs(a);
-            int abs2 = Math.abs(b);
-            if (abs1 == abs2) {
-                if (a > b) return 1;
-                else return -1;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> {
+            if (Math.abs(a) == Math.abs(b)) {
+                return Integer.compare(a, b);
             }
-            return abs1 - abs2;
+            return Integer.compare(Math.abs(a) , Math.abs(b));
         });
 
-        int n = Integer.parseInt(br.readLine());
-        while (n > 0) {
+        for(int i = 0; i < n; i++) {
             int x = Integer.parseInt(br.readLine());
-            if (x != 0) {
-                pq.add(x);
+
+            if (x == 0) {
+                if (pq.isEmpty()) sb.append(0).append("\n");
+                else sb.append(pq.poll()).append("\n");
             }
 
             else {
-                if (pq.isEmpty()) {
-                    sb.append("0").append("\n");
-                }
-                else {
-                    sb.append(pq.peek()).append("\n");
-                    pq.poll();
-                }
+                pq.add(x);
             }
-            n--;
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
