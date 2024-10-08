@@ -1,20 +1,15 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
-
+import java.util.*;
+import java.io.*;
 public class Main {
     static int n;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b - a); // 큰 값부터 출력
         int [][] board = new int[n][n];
-        for(int i = 0; i < n; i++) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+
+        for(int i = 0; i < n; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             for(int j = 0; j < n; j++) {
                 board[i][j] = Integer.parseInt(st.nextToken());
@@ -22,12 +17,9 @@ public class Main {
             }
         }
 
-        int cnt = n;
-        int res = 0;
-        while (cnt > 0) {
-            res = pq.poll();
-            cnt--;
+        for(int i = 0; i < n - 1; i++) {
+            pq.poll();
         }
-        System.out.println(res);
+        System.out.println(pq.peek());
     }
 }
