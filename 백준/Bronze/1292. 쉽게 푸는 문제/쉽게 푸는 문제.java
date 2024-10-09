@@ -1,0 +1,34 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    static int a, b;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        a = Integer.parseInt(st.nextToken());
+        b = Integer.parseInt(st.nextToken());
+
+
+        int [] arr = new int[1002];
+        int idx = 0;
+        for(int i = 1; i <= b; i++) {
+            for(int j = 0; j < i; j++) { // 0 - 1, 0 - 2
+                //System.out.println(i);
+                if (idx >= b) break;
+                arr[idx++] = i;
+            }
+        }
+
+        long res = 0;
+        for(int i = a - 1; i <= b; i++) {
+            res += arr[i];
+            //System.out.println(arr[i]);
+        }
+        System.out.println(res);
+    }
+
+}
