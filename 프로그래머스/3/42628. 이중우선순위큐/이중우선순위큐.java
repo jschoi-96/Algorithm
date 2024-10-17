@@ -1,36 +1,35 @@
 import java.util.*;
 class Solution {
     public int[] solution(String[] operations) {
-        int[] answer = new int[2];
+        int[] answer = {};
         
-        PriorityQueue<Integer> min_pq = new PriorityQueue<>();
-        PriorityQueue<Integer> max_pq = new PriorityQueue<>(Collections.reverseOrder());
-        // max : 16 5643
-        // min : 5643 16
-        for(String operation : operations) {
-            String [] str = operation.split(" ");
-            String order = str[0];
+        PriorityQueue<Integer> min = new PriorityQueue<>();
+        PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(String op : operations) {
+            String [] str = op.split(" ");
             int num = Integer.parseInt(str[1]);
-            if (order.equals("I")) {
-                min_pq.add(num);
-                max_pq.add(num);
+            if (str[0].equals("I")) {
+                min.add(num);
+                max.add(num);
             }
             
-            else if (order.equals("D")) {
-                if (num == -1 && !min_pq.isEmpty()) { // 최솟값 삭제
-                    max_pq.remove(min_pq.poll());
+            else if (str[0].equals("D")) {
+
+                if (!max.isEmpty() && num == 1) {
+                    int c = max.poll();
+                    min.remove(c);
                 }
                 
-                else if (num == 1 && !max_pq.isEmpty()) { // 최댓값 삭제
-                    min_pq.remove(max_pq.poll());
+                else if (!min.isEmpty() && num == -1){
+                    int c = min.poll();
+                    max.remove(c);
                 }
             }
         }
         
-        answer[0] = max_pq.isEmpty() ? 0 : max_pq.poll();
-        answer[1] = min_pq.isEmpty() ? 0 : min_pq.poll();
-        return answer;
+        if (min.size() == 0) return new int[]{0,0};
+        else if (min.size() == 1) return new int[]{min.peek(), min.peek()};
+        else return new int[]{max.peek(), min.peek()};
     }
-    // min:  97, 333, 653
-    // max: 45, 97, 333
 }
