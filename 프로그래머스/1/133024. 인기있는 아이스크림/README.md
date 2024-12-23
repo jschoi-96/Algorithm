@@ -16,7 +16,7 @@ Empty
 
 ### 제출 일자
 
-2024년 09월 29일 00:07:47
+2024년 12월 23일 19:36:01
 
 ### 문제 설명
 
@@ -126,48 +126,23 @@ Empty
 </tbody>
       </table>
 <p>상반기 아이스크림 맛을 총주문량을 기준으로 내림차순 정렬하고 총주문량이 같은 경우 출하 번호를 기준으로 오름차순 정렬하면 chocolate, melon, white_chocolate, strawberry, mango, orange, pineapple, vanilla, caramel, peach, watermelon, mint_chocolate 순서대로 조회되어야 합니다. 따라서 SQL문을 실행하면 다음과 같이 나와야 합니다. </p>
-<table class="table">
-        <thead><tr>
-<th>FLAVOR</th>
-</tr>
-</thead>
-        <tbody><tr>
-<td>chocolate</td>
-</tr>
-<tr>
-<td>melon</td>
-</tr>
-<tr>
-<td>white_chocolate</td>
-</tr>
-<tr>
-<td>strawberry</td>
-</tr>
-<tr>
-<td>mango</td>
-</tr>
-<tr>
-<td>orange</td>
-</tr>
-<tr>
-<td>pineapple</td>
-</tr>
-<tr>
-<td>vanilla</td>
-</tr>
-<tr>
-<td>caramel</td>
-</tr>
-<tr>
-<td>peach</td>
-</tr>
-<tr>
-<td>watermelon</td>
-</tr>
-<tr>
-<td>mint_chocolate</td>
-</tr>
-</tbody>
-      </table>
+
+<p>| FLAVOR | </p>
+
+<p>|----|<br>
+| chocolate |<br>
+| melon |<br>
+| white_chocolate |<br>
+| strawberry |<br>
+| mango |<br>
+| orange |<br>
+| pineapple |<br>
+| vanilla |<br>
+| caramel | </p>
+
+<p>| peach |<br>
+| watermelon | <br>
+| mint_chocolate | </p>
+
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
