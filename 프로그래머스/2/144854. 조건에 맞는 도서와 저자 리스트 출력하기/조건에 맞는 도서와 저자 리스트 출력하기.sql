@@ -1,0 +1,7 @@
+-- 코드를 입력하세요
+SELECT b.BOOK_ID, a.AUTHOR_NAME, DATE_FORMAT(PUBLISHED_DATE, '%Y-%m-%d') as PUBLISHED_DATE 
+FROM BOOK b
+JOIN AUTHOR a
+ON b.AUTHOR_ID = a.AUTHOR_ID
+WHERE CATEGORY = '경제'
+order by published_date
