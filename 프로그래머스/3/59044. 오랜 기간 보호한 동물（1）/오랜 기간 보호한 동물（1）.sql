@@ -1,10 +1,8 @@
 -- 코드를 입력하세요
--- 1. 입양을 못간 동물들 (ANIMALS_INS에는 있으나 ONS에는 없어야함)
-
-SELECT I.NAME, I.DATETIME
-FROM ANIMAL_INS I
-LEFT JOIN ANIMAL_OUTS O
-ON I.ANIMAL_ID = O.ANIMAL_ID
-WHERE O.ANIMAL_ID IS NULL
-ORDER BY I.DATETIME
-LIMIT 3
+SELECT i.name, i.datetime
+FROM animal_ins i
+left join animal_outs o
+on i.animal_id = o.animal_id
+where o.animal_id is null
+order by i.datetime
+limit 3
