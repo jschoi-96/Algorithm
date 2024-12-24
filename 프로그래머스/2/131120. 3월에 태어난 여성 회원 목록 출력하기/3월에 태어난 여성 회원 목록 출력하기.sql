@@ -1,7 +1,5 @@
 -- 코드를 입력하세요
-SELECT MEMBER_ID, MEMBER_NAME, GENDER, DATE_FORMAT(DATE_OF_BIRTH, '%Y-%m-%d') as DATE_OF_BIRTH
-FROM MEMBER_PROFILE
-WHERE MONTH(DATE_OF_BIRTH) = 03
-and GENDER = 'W'
-and TLNO is not NULL
-order by member_id
+SELECT member_id, member_name, gender, date_format(date_of_birth, '%Y-%m-%d') as DATE_OF_BIRTH
+from member_profile
+where gender = 'W' and month(date_of_birth) = '03' and TLNO is not null
+order by member_id asc;
