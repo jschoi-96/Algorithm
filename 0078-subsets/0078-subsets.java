@@ -1,20 +1,21 @@
 class Solution {
     List<List<Integer>> res = new ArrayList<>();
-    boolean [] visited = new boolean[10];
     public List<List<Integer>> subsets(int[] nums) {
-        dfs(res, nums, new ArrayList<>(), 0, visited);
+        if (nums.length == 0) {
+            return new ArrayList<>();
+        }
+
+        dfs(nums, new ArrayList<>(), 0);
         return res;
     }
 
-    public void dfs(List<List<Integer>> res, int [] nums, List<Integer> tmp, 
-    int start, boolean [] visited) {
-        
-        res.add(new ArrayList<>(tmp));
+    public void dfs(int [] nums, List<Integer> cur, int depth) {
+        res.add(new ArrayList<>(cur));
 
-        for(int i = start; i < nums.length; i++) {
-                tmp.add(nums[i]);
-                dfs(res, nums, tmp, i + 1, visited);
-                tmp.remove(tmp.size() - 1);
+        for(int i = depth; i < nums.length; i++) {
+            cur.add(nums[i]);
+            dfs(nums, cur, i + 1);
+            cur.remove(cur.size() - 1);
         }
     }
 }
