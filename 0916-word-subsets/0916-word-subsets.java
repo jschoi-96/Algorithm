@@ -1,35 +1,32 @@
 class Solution {
     public List<String> wordSubsets(String[] words1, String[] words2) {
-
         List<String> res = new ArrayList<>();
 
-        Map<Character, Integer> maxFreqMap = new HashMap<>();
-        for (String word : words2) {
-            Map<Character, Integer> freqMap = new HashMap<>();
-            for (char c : word.toCharArray()) {
-                freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+        int [] maxFreq = new int[26];
+        for(String word : words2) {
+            int [] freq = new int[26];
+            for(char c : word.toCharArray()) {
+                freq[c - 'a']++;
             }
-            for (char c : freqMap.keySet()) {
-                maxFreqMap.put(c, Math.max(maxFreqMap.getOrDefault(c, 0), freqMap.get(c)));
+
+            for(int i = 0; i < 26; i++) {
+                maxFreq[i] = Math.max(maxFreq[i], freq[i]);
             }
         }
 
-        for (String word : words1) {
-            Map<Character, Integer> cntMap = new HashMap<>();
-            for(char c : word.toCharArray()) {  
-                cntMap.put(c, cntMap.getOrDefault(c, 0) + 1);
+        for(String word : words1) {
+            int [] wordFreq = new int[26];
+            for(char c : word.toCharArray()) {
+                wordFreq[c - 'a']++;
             }
 
             boolean flag = true;
-            for (char key : maxFreqMap.keySet()) {
-                if (!cntMap.containsKey(key) || cntMap.get(key) < maxFreqMap.get(key)) {
+            for(int i = 0; i < 26; i++) {
+                if (wordFreq[i] < maxFreq[i]) {
                     flag = false;
                     break;
                 }
             }
-
-            // l: 1, e:2, o: 2
-            // leetcode -> l:1, e:3, o:1
 
             if (flag) {
                 res.add(word);
