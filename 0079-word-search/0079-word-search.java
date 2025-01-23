@@ -2,6 +2,8 @@ class Solution {
     boolean flag = false;
     boolean [][] visited; 
     int n, m;
+    int [] dx = {1,0,-1,0};
+    int [] dy = {0,1,0,-1};
     public boolean exist(char[][] board, String word) {
         n = board.length;
         m = board[0].length;
@@ -11,46 +13,27 @@ class Solution {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
                 if (board[i][j] == word.charAt(0)) { // 첫글자가 같아야 탐색 시작.
-                    visited[i][j] = true;
-                    dfs(board, word, i, j, 0, "");
-                    visited[i][j] = false;
+                    if (dfs(board,word,i,j,0)) {
+                        return true;
+                    }
                 }
             }
         }
         return flag;
     }
 
-    public void dfs(char[][] board, String word, int i, int j, int len, String cur) {
-        cur += board[i][j];
-        
-        if (len == word.length() - 1) {
-            if (cur.equals(word)) {
-                flag = true;
-                return;
-            }
-            return;
-        }
+    public boolean dfs(char[][] board, String word, int i, int j, int idx) {
+        if (idx == word.length()) return true;
+        if (i < 0 || j < 0 || i >= n || j >= m || visited[i][j]
+        || board[i][j] != word.charAt(idx)) return false;
 
-        if (i - 1 >= 0 && !visited[i-1][j]) {
-            visited[i-1][j] = true;
-            dfs(board, word, i-1, j, len + 1, cur);
-            visited[i-1][j] = false;
+        visited[i][j] = true;
+        for(int dir = 0; dir < 4; dir++) {
+            int x = i + dx[dir];
+            int y = j + dy[dir];
+            if (dfs(board, word,x,y,idx+1)) return true;
         }
-        if (i + 1 < n && !visited[i+1][j]) {
-            visited[i+1][j] = true;
-            dfs(board, word, i+1, j, len + 1, cur);
-            visited[i+1][j] = false;
-        }
-        if (j - 1 >= 0 && !visited[i][j-1]) {
-            visited[i][j-1] = true;
-            dfs(board, word, i, j-1, len + 1, cur);
-            visited[i][j-1] = false;
-        }
-        if (j + 1 < m && !visited[i][j+1]) {
-            visited[i][j+1] = true;
-            dfs(board, word, i, j+1, len + 1, cur);
-            visited[i][j+1] = false;
-        }
-            
+        visited[i][j] = false;
+        return false;
     }
 }
