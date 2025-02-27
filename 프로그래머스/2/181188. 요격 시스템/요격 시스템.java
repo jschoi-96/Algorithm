@@ -3,22 +3,22 @@ class Solution {
     public int solution(int[][] targets) {
         int answer = 0;
         
-        PriorityQueue<int []> pq = new PriorityQueue<>((a,b) -> {
-            return Integer.compare(a[1], b[1]);
-        });
         
-        for(int [] target : targets) {
-            pq.add(new int[]{target[0] , target[1]});
-        }
+        Arrays.sort(targets , (a,b) -> a[1] - b[1]);
         
         int before = 0;
-        while(!pq.isEmpty()) {
-            int [] cur = pq.poll();
-            if (cur[0] >= before) {
+        for(int [] target : targets) {
+            int s = target[0];
+            int e = target[1];
+            
+            if (before <= s) { // 시작점보다 같
+                before = e;
                 answer++;
-                before = cur[1];
+                //System.out.println(s + " " + e);
             }
+            // System.out.println(s + " " + e);
         }
+        
         return answer;
     }
 }
