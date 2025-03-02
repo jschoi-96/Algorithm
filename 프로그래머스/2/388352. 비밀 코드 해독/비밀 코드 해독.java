@@ -3,15 +3,14 @@ class Solution {
     int answer = 0;
     public int solution(int n, int[][] q, int[] ans) {
         
-        
-        dfs(new ArrayList<>() , 1, n, q, ans);
+        dfs(n, 0, 1, new ArrayList<>(), q, ans);
         return answer;
     }
     
-    public void dfs(List<Integer> tmp, int start, int n, int[][] q, int[] ans) {
-        if (tmp.size() == 5) {
-            if (isValid(tmp,q,ans)) {
-                //System.out.println(tmp);
+    public void dfs(int n, int length, int start, List<Integer> tmp,
+                   int[][] q, int[] ans) {
+        if (length == 5) {
+            if (isValid(tmp, q, ans)) {
                 answer++;
             }
             return;
@@ -19,19 +18,18 @@ class Solution {
         
         for(int i = start; i <= n; i++) {
             tmp.add(i);
-            dfs(tmp, i + 1, n, q, ans);
+            dfs(n, length + 1, i + 1, tmp, q, ans);
             tmp.remove(tmp.size() - 1);
         }
     }
     
     public boolean isValid(List<Integer> tmp, int[][] q, int[] ans) {
         int idx = 0;
-        for(int [] arr : q) {
+        for(int [] input : q) {
             int cnt = 0;
-            for(int i = 0; i < arr.length; i++) {
-                if (tmp.contains(arr[i])) cnt++;
+            for(int i = 0; i < input.length; i++) {
+                if (tmp.contains(input[i])) cnt++;
             }
-            
             if (cnt != ans[idx]) return false;
             idx++;
         }
