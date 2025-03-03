@@ -1,67 +1,85 @@
 class Solution {
+    int n;
+    int [] bob_time;
+    boolean [] bob_visited;
     List<List<Integer>> graph = new ArrayList<>();
-    int [] bobTime;
+    int max = Integer.MIN_VALUE;
     public int mostProfitablePath(int[][] edges, int bob, int[] amount) {
-        int n = edges.length;
-        bobTime = new int[n+1];
-        boolean [] visited = new boolean[n+1];
+        n = edges.length + 1;
+        bob_time = new int[n+1];
+        bob_visited = new boolean[n+1];
+
+        Arrays.fill(bob_time, -1);
+        bob_time[bob] = 0;
 
         for(int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
-            bobTime[i] = -1; // 초기화
         }
-        bobTime[bob] = 0; // 0으로 초기화
-
         for(int [] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            graph.get(u).add(v);
-            graph.get(v).add(u);
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
         }
 
-        calculateBobPath(bob, -1, 0);   
-        return dfs(0, -1, 0, amount);
+        calculateBob(bob, bob_time);
+        // for(int i = 0; i < n; i++) {
+        //     System.out.print(bob_time[i] + " ");
+        // }
+        calculateIncome(amount);
+        return max;
     }
 
-    public int dfs(int node, int parent, int time, int [] amount) {
-        int reward = 0;
-
-        if (bobTime[node] == -1 || time < bobTime[node]) { // 도달하지 않았거나 alice가 먼저 도달
-            reward += amount[node];
-        }
-
-        else if (time == bobTime[node]) {
-            reward += amount[node] / 2;
-        }
-        
-        int maxIncome = Integer.MIN_VALUE;
-
-        for(int next : graph.get(node)) {
-            if (next == parent) continue;
-            maxIncome = Math.max(maxIncome, dfs(next, node, time + 1, amount));
-        }
-
-        if (maxIncome == Integer.MIN_VALUE) {
-            System.out.println(reward);
-            return reward;
-        }
-        //System.out.println(reward + maxIncome);
-        return reward + maxIncome;
-    }
-
-    public boolean calculateBobPath(int node, int parent, int time) {
-        if (node == 0) {
-            bobTime[node] = time;
+    public boolean calculateBob(int bob, int[] bob_time) {
+        if (bob == 0) { // 노드 0에 도착했을 때 
             return true;
         }
 
-        for(int next : graph.get(node)) {
-            if (next == parent) continue;
-            if (calculateBobPath(next, node, time + 1)) {
-                bobTime[node] = time;
-                return true;
+        bob_visited[bob] = true;
+        for(int nxt : graph.get(bob)) {
+            if (!bob_visited[nxt]) {
+                bob_time[nxt] = bob_time[bob] + 1;
+                if (calculateBob(nxt, bob_time)) {
+                    return true;
+                }
+                bob_time[nxt] = -1;
             }
         }
         return false;
+    }
+
+    public void calculateIncome(int[] amount) {
+        boolean [] visited = new boolean[n + 1];
+        visited[0] = true;
+        Queue<int []> q = new LinkedList<>();
+        q.add(new int[]{0, amount[0] , 0}); // 현재노드, reward, time 순서대로 삽입
+
+        while(!q.isEmpty()) {
+            int [] cur = q.poll();
+            int node = cur[0];
+            int income = cur[1];
+            int a_time = cur[2];
+
+            boolean isLeaf = true;
+            for(int nxt : graph.get(node)) {
+                if (visited[nxt]) continue;
+                visited[nxt] = true;
+                
+                int b_time = bob_time[nxt];
+                int newIncome = income;
+                if (a_time + 1 < b_time || b_time == -1) { 
+                    // bob이 방문하지 않았거나 앨리스보다 늦게 방문하는 경우
+                    newIncome += amount[nxt];
+                }
+
+                else if (a_time + 1 == b_time) {
+                    // 동시에 방문하는 경우는 reward / 2
+                    newIncome += amount[nxt] / 2;
+                }
+                q.add(new int[]{nxt, newIncome, a_time + 1});
+                isLeaf = false;
+            }
+            if (isLeaf) {
+                max = Math.max(max, income);
+            }
+        }
     }
 }
