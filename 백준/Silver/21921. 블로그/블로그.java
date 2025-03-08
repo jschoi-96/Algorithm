@@ -19,14 +19,14 @@ public class Main {
         }
 
         int hi = 0;
-        int res = arr[0];
+        int res = 0;
         int max = Integer.MIN_VALUE;
         int count = 1;
 
         for(int lo = 0; lo < n; lo++) {
-            while (hi < n && hi - lo + 1 < x) {
+            while (hi < n && hi - lo + 1 <= x) {
+                res += arr[hi];
                 hi++;
-                if (hi != n) res += arr[hi];
             }
 
             if (hi - lo + 1 < x) break;
