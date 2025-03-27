@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 30일 22:10:08
+2025년 03월 28일 00:46:40
 
 ### 문제 설명
 
@@ -28,15 +28,38 @@
 <th>Nullable</th>
 </tr>
 </thead>
-        <tbody></tbody>
+        <tbody><tr>
+<td>LINE</td>
+<td>VARCHAR(10)</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>NO</td>
+<td>NUMBER</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>ROUTE</td>
+<td>VARCHAR(50)</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>STATION_NAME</td>
+<td>VARCHAR(100)</td>
+<td>FLASE</td>
+</tr>
+<tr>
+<td>D_BETWEEN_DIST</td>
+<td>NUMBER</td>
+<td>FLASE</td>
+</tr>
+<tr>
+<td>D_CUMULATIVE</td>
+<td>NUMBER</td>
+<td>FLASE</td>
+</tr>
+</tbody>
       </table>
-<p>| LINE | VARCHAR(10) | FALSE |<br>
-| NO | NUMBER | FALSE |<br>
-| ROUTE | VARCHAR(50) | FALSE |<br>
-| STATION_NAME | VARCHAR(100)| FLASE |<br>
-| D_BETWEEN_DIST | NUMBER | FLASE |<br>
-| D_CUMULATIVE | NUMBER | FLASE |</p>
-
 <hr>
 
 <h5>문제</h5>
@@ -61,17 +84,72 @@
 <th>D_CUMULATIVE</th>
 </tr>
 </thead>
-        <tbody></tbody>
+        <tbody><tr>
+<td>2호선</td>
+<td>45</td>
+<td>성수지선</td>
+<td>용답</td>
+<td>2.3</td>
+<td>51.1</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>46</td>
+<td>성수지선</td>
+<td>신답</td>
+<td>1</td>
+<td>52.1</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>47</td>
+<td>성수지선</td>
+<td>용두(동대문구청)</td>
+<td>0.9</td>
+<td>53</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>48</td>
+<td>성수지선</td>
+<td>신설동</td>
+<td>1.2</td>
+<td>54.2</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>49</td>
+<td>신정지선</td>
+<td>도림천</td>
+<td>1</td>
+<td>55.2</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>50</td>
+<td>신정지선</td>
+<td>양천구청</td>
+<td>1.7</td>
+<td>56.9</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>51</td>
+<td>신정지선</td>
+<td>신정네거리</td>
+<td>1.9</td>
+<td>58.8</td>
+</tr>
+<tr>
+<td>2호선</td>
+<td>52</td>
+<td>신정지선</td>
+<td>까치산</td>
+<td>1.4</td>
+<td>60.2</td>
+</tr>
+</tbody>
       </table>
-<p>| 2호선 | 45 | 성수지선 | 용답 | 2.3 | 51.1 |<br>
-| 2호선 | 46 | 성수지선 | 신답 | 1 | 52.1 |<br>
-| 2호선 | 47 | 성수지선 | 용두(동대문구청) | 0.9 | 53 |<br>
-| 2호선 | 48 | 성수지선 | 신설동 | 1.2 | 54.2 |<br>
-| 2호선 | 49 | 신정지선 | 도림천 | 1 | 55.2 |<br>
-| 2호선 | 50 | 신정지선 | 양천구청 | 1.7 | 56.9 |<br>
-| 2호선 | 51 | 신정지선 | 신정네거리 | 1.9 | 58.8 |<br>
-| 2호선 | 52 | 신정지선 | 까치산 | 1.4 | 60.2 |</p>
-
 <p>SQL을 실행하면 다음과 같이 출력되어야 합니다.</p>
 <table class="table">
         <thead><tr>
