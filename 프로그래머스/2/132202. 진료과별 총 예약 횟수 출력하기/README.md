@@ -16,7 +16,7 @@ Empty
 
 ### 제출 일자
 
-2024년 12월 23일 19:30:58
+2025년 03월 28일 01:12:53
 
 ### 문제 설명
 
@@ -181,15 +181,33 @@ Empty
 </tbody>
       </table>
 <p>SQL을 실행하면 다음과 같이 출력되어야 합니다.</p>
-
-<p>| 진료과코드 | 5월예약건수 | </p>
-
-<p>| -- | -- |<br>
-| OB | 1 |<br>
-| OS | 1 |<br>
-| CS | 2 |<br>
-| FM | 2 |<br>
-| GS | 2 |</p>
-
+<table class="table">
+        <thead><tr>
+<th>진료과코드</th>
+<th>5월예약건수</th>
+</tr>
+</thead>
+        <tbody><tr>
+<td>OB</td>
+<td>1</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>1</td>
+</tr>
+<tr>
+<td>CS</td>
+<td>2</td>
+</tr>
+<tr>
+<td>FM</td>
+<td>2</td>
+</tr>
+<tr>
+<td>GS</td>
+<td>2</td>
+</tr>
+</tbody>
+      </table>
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
