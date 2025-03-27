@@ -1,7 +1,14 @@
--- 코드를 입력하세요
-SELECT b.TITLE, b.BOARD_ID, r.REPLY_ID, r.WRITER_ID, r.contents,
-DATE_FORMAT(r.created_date, '%Y-%m-%d') as CREATED_DATE
-FROM USED_GOODS_BOARD b
-JOIN USED_GOODS_REPLY r on b.board_id = r.board_id
-where DATE_FORMAT(b.created_date, '%Y-%m') = '2022-10'
-order by r.created_date, b.title
+-- 선택: 게시글 제목, ID, 댓글 ID, 댓글작성자 ID, 댓글 내용, 댓글 작성일
+-- 테이블: BOARD JOIN REPLY
+-- 조건: 2022년 10월에 작성
+-- 정렬: 댓글 작성일, 게시글 제목 
+SELECT B.TITLE, B.BOARD_ID, R.REPLY_ID, R.WRITER_ID, R.CONTENTS, 
+    DATE_FORMAT(R.CREATED_DATE, '%Y-%m-%d') AS CREATED_DATE
+FROM
+    USED_GOODS_BOARD B
+JOIN
+    USED_GOODS_REPLY R ON B.BOARD_ID = R.BOARD_ID
+WHERE
+    B.CREATED_DATE LIKE '2022-10%'
+ORDER BY
+    CREATED_DATE, TITLE
