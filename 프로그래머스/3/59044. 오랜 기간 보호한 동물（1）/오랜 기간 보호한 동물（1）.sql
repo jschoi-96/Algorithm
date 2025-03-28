@@ -1,8 +1,12 @@
 -- 코드를 입력하세요
-SELECT i.name, i.datetime
-FROM animal_ins i
-left join animal_outs o
-on i.animal_id = o.animal_id
-where o.animal_id is null
-order by i.datetime
-limit 3
+-- 입양을 못갔다. OUT 기록이 없음. 
+SELECT 
+    I.NAME, I.DATETIME
+FROM 
+    ANIMAL_INS I
+LEFT JOIN ANIMAL_OUTS O ON I.ANIMAL_ID = O.ANIMAL_ID
+WHERE 
+    O.ANIMAL_ID IS NULL
+ORDER BY
+    I.DATETIME
+LIMIT 3
