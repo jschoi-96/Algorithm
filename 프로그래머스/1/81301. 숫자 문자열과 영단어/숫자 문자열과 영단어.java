@@ -1,12 +1,32 @@
+import java.util.*;
 class Solution {
+    
+    String [] str = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     public int solution(String s) {
-        String [] numbers = {"zero","one","two","three","four","five","six","seven","eight","nine"};
+        int answer = 0;
         
-        for(int i = 0; i < numbers.length; i++){
-            if (s.contains(numbers[i])) {
-                s = s.replace(numbers[i], Integer.toString(i));
+        StringBuilder sb = new StringBuilder();
+        
+        String tmp = "";
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            
+            if (Character.isDigit(c)) {
+                sb.append(c);
+            }
+            
+            else {
+                tmp += c;
+                for(int j = 0; j < str.length; j++) {
+                    if (tmp.equals(str[j])) {
+                        sb.append(j);
+                        tmp = ""; // 초기화
+                        break;
+                    }
+                }
             }
         }
-        return Integer.parseInt(s);
+        return Integer.parseInt(sb.toString());
     }
+
 }
