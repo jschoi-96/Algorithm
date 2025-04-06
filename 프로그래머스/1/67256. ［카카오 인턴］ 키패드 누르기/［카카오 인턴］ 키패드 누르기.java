@@ -1,59 +1,73 @@
 class Solution {
     public String solution(int[] numbers, String hand) {
         String answer = "";
+        char [][] board = {{'1','2','3'}, {'4','5','6'},{'7','8','9'},{'*','0','#'}};
         
-        // 손의 포지션을 int [] 형태로 저장
-        int [] left = new int[]{3,0};
-        int [] right = new int[]{3,2};
-        // 왼쪽, 오른쪽 숫자가 나올 때 포지션 정보를 업데이트 해준다.
-        // 2,5,8,0이 나오는 경우 왼손과 오른손의 거리를 계산하여 최소값을 찾는다.
-        for(Integer num : numbers) {
-            if (num == 1 || num == 4 || num == 7) {
-                if (num == 1) left = new int[]{0,0};
-                else if (num == 4) left = new int[]{1,0};
-                else left = new int[]{2,0};
-                answer += "L";
-                
-            }
-            else if (num == 3 || num == 6 || num == 9) {
-                if (num == 3) right = new int[]{0,2};
-                else if (num == 6) right = new int[]{1,2};
-                else right = new int []{2,2};
-                answer += "R";
-            }
-            else {
-                int [] target;
-                if (num == 2) target = new int[]{0,1};
-                else if(num == 5) target = new int[]{1,1};
-                else if(num == 8) target = new int[]{2,1};
-                else target = new int[]{3,1};
-                
-                int left_dist = Math.abs(left[0] - target[0]) + Math.abs(left[1] - target[1]);
-                int right_dist = Math.abs(right[0] - target[0]) + Math.abs(right[1] - target[1]);
-                if (left_dist == right_dist) {
-                    if (hand.equals("left")) {
+        int [] left_pos = new int[2];
+        int [] right_pos = new int[2];
+        
+        // 초기값 설정
+        left_pos[0] = 3; left_pos[1] = 0;
+        right_pos[0] = 3; right_pos[1] = 2;
+        
+        for(int number : numbers) {
+            if (number == 1 || number == 4 || number == 7) {
+                for (int i = 0; i < 3; i++) {
+                    // 왼쪽 좌표값 갱신
+                    if (board[i][0] - '0' == number) {
+                        left_pos[0] = i;
+                        left_pos[1] = 0;
                         answer += "L";
-                        left = target;
                     }
-                    else {
+                }
+            }
+            
+            else if (number == 3 || number == 6 || number == 9) {
+                for(int i = 0; i < 3; i++) {
+                    // 오른쪽 좌표값 갱신
+                    if (board[i][2] - '0' == number) {
+                        right_pos[0] = i;
+                        right_pos[1] = 2;
                         answer += "R";
-                        right = target;
                     }
-                    continue;
+                }
+            }
+            
+            else {
+                int [] cur = new int[2];
+                for(int i = 0; i < 4; i++) {
+                    if (board[i][1] - '0' == number) {
+                        cur[0] = i;
+                        cur[1] = 1;
+                    }
                 }
                 
-                int dist = Math.min(left_dist, right_dist);
-                
-                
-                
-                if (dist == left_dist) {
+                int left_dist = Math.abs(cur[0] - left_pos[0]) + Math.abs(cur[1] - left_pos[1]);
+                int right_dist = Math.abs(cur[0] - right_pos[0]) + Math.abs(cur[1] - right_pos[1]);
+                if (left_dist < right_dist) {
+                    left_pos[0] = cur[0];
+                    left_pos[1] = cur[1];
+                    // 거리를 다시 설정해야함.
                     answer += "L";
-                    left = target;
+                }
+                
+                else if (left_dist > right_dist) {
+                    right_pos[0] = cur[0];
+                    right_pos[1] = cur[1];
+                    answer += "R";
                 }
                 
                 else {
-                    answer += "R";
-                    right = target;
+                    if (hand.equals("left")) {
+                        left_pos[0] = cur[0];
+                        left_pos[1] = cur[1];
+                        answer += "L";
+                    }
+                    else {
+                        right_pos[0] = cur[0];
+                        right_pos[1] = cur[1];
+                        answer += "R";
+                    }
                 }
             }
         }
