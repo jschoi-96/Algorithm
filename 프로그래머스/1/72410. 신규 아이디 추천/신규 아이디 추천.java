@@ -1,85 +1,59 @@
+import java.util.*;
 class Solution {
     public String solution(String new_id) {
         String answer = "";
-        new_id = new_id.toLowerCase();
-        new_id = level2(new_id);
-        new_id = level3(new_id);
-        new_id = level4(new_id);
-        new_id = level5(new_id);
-        new_id = level6(new_id);
-        new_id = level7(new_id);
         
-        return new_id;
-    }
-    
-    private String level2(String new_id) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : new_id.toCharArray()){
-            if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '-' || c == '_' || c == '.') {
-                sb.append(c);
-            }
-            
-            else {
-                continue;
-            }
-        }
-        return sb.toString();
-    }
-    
-    private String level3(String new_id) {
-        StringBuilder sb = new StringBuilder();
-        boolean lastDot = false;  // 이전 문자가 마침표인지 여부
-
-        for (char c : new_id.toCharArray()) {
-            if (c == '.') {
-                if (!lastDot) {  // 이전 문자가 마침표가 아닌 경우에만 추가
-                    sb.append(c);
-                }
-                lastDot = true;
-            } else {
-                sb.append(c);
-                lastDot = false;
-            }
-        }
-
-        return sb.toString();
-    }
-    
-    private String level4 (String new_id) {
-        if (new_id.charAt(0) == '.') {
-            new_id = new_id.substring(1);
+        // 1단계
+        String one = "";
+        for(char c : new_id.toCharArray()) {
+            one += Character.toLowerCase(c);
         }
         
-        if (new_id.length() >= 1 && new_id.charAt(new_id.length() - 1) == '.') {
-            new_id = new_id.substring(0, new_id.length() - 1);
+        // 2단계
+        String two = "";
+        for(char c : one.toCharArray()) {
+            if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '-' 
+                || c == '_' || c == '.') two += c;
         }
-        return new_id;
-    }
-    
-    private String level5(String new_id) {
-        if (new_id.isEmpty()) {
-            new_id += "a";
+        
+        // 3단계
+        String three = "";
+        three += two.charAt(0);
+        for(int i = 1; i < two.length(); i++) {
+            if (two.charAt(i) == '.' && two.charAt(i-1) == '.') continue;
+            three += two.charAt(i);
         }
-        return new_id;
-    }
-    
-    private String level6(String new_id) {
-        if (new_id.length() >= 16) {
-            new_id = new_id.substring(0,15);
-            
-            if (new_id.charAt(new_id.length() - 1) == '.') {
-                new_id = new_id.substring(0, new_id.length() - 1);
+        
+        String four = "";
+        for(int i = 0; i < three.length(); i++) {
+            if (i == 0 || i == three.length() - 1) {
+                if (three.charAt(i) == '.') continue;
+                else four += three.charAt(i);
             }
+            else four += three.charAt(i);
         }
-        return new_id;
-    }
-    
-    private String level7(String new_id) {
-        if (new_id.length() <= 2) {
-            while (new_id.length() < 3) {
-                new_id += new_id.charAt(new_id.length() - 1);
-            }
+        
+        
+        // System.out.println(four);
+        
+        String five = "";
+        if (four.length() == 0) five = "a";
+        else five = four;
+        
+        // 6단계
+        String six = five;
+        if (five.length() >= 16) {
+            six = five.substring(0, 15);
+            if (six.endsWith(".")) six = six.substring(0, six.length() - 1);
         }
-        return new_id;
+        
+        // System.out.println(four);
+        
+        String sev = six;
+        while(sev.length() < 3) {
+            sev += sev.charAt(sev.length() - 1);
+        }
+        
+        return sev;
     }
 }
