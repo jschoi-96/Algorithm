@@ -1,39 +1,55 @@
 class Solution {
     public int solution(int[] schedules, int[][] timelogs, int startday) {
-        int staff = timelogs.length;
-        int answer = staff; // 모든 직원이 시간 지킨다고 가정 
+        int answer = 0;
+        int n = schedules.length;
         
-        int days = startday;
-        
-        for(int i = 0; i < staff; i++) {
-            days = startday; // 다시 기존 날짜로 초기화
-            int start_time = schedules[i];
-            int limit = start_time + 10;
-            
-            // 분이 60이 넘는경우 
-            if (limit % 100 >= 60) limit += 40;
-            
-            for(int j = 0; j < 7; j++) {
-                if (isWeekend(days)) {
-                    //System.out.println("days: " + days);
-                    days++;
-                    continue; // 주말인 경우는 이벤트 영향 x
+        for(int i = 0; i < n; i++) {
+            // 날짜
+            int day = startday;
+            int each = schedules[i];
+            int cmp1 = cal(each);
+
+            boolean flag = true;
+            for(int j = 0; j < timelogs[i].length; j++) {
+                if (isWeekend(day)) {
+                    day++;
+                    continue;
                 }
                 int time = timelogs[i][j];
-                // if (time % 100 > 60) time += 40;
                 
-                if (time > limit) {
-                    answer--;
+                // 여기서 시간 * 100 + 분을 계산해줘야 함.
+                int cmp2 = cal(time - 10);
+                
+                if (cmp2 > cmp1) { // 처음에 정해둔 시간을 초과한 경우
+                    flag = false;
+                    //break;
+                }
+                
+                day++; // 날짜 하루씩 지남 
+                // System.out.println("처음 시간: " + cmp1 + " cmp2: " + cmp2 + " day:  " + day);
+                if (cmp2 > cmp1) {
+                    flag = false;
                     break;
                 }
-                days++;
             }
-            //System.out.println();
+            
+            if (flag) answer++;
         }
         return answer;
     }
     
-    public boolean isWeekend(int num) {
-        return num == 6 || num == 7 || num == 13 || num == 14;
+    public int cal(int time) {
+        int t = time; // 10을 빼줌
+        
+        int div = t % 100; // 나머지
+        if (div >= 60) { // 60 이상인 경우엔 40을 빼줘서 정상처리 해줘야 함.
+            t -= 40;
+        }
+        return t;
+    }
+    
+    public boolean isWeekend(int day) {
+        return day == 6 || day == 7 || day == 13 || day == 14 
+            || day == 20 || day == 21 || day == 27 || day == 28;
     }
 }
