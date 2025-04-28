@@ -1,41 +1,53 @@
 import java.util.*;
 class Solution {
-    // 원소 10^9 -> 합은 long 타입으로 받을 것 
     public int solution(int[] queue1, int[] queue2) {
-        int answer = 0;
+        int answer = -1;
+        // long 타입 고려!!!
+        int len = queue1.length + queue2.length;
+        
+        long sum = 0;
+        long q1Sum = 0;
+        long q2Sum = 0;
         
         Queue<Integer> q1 = new LinkedList<>();
         Queue<Integer> q2 = new LinkedList<>();
-        long sum = 0, q1Sum = 0, q2Sum = 0;
-        for(int num : queue1) {
-            q1.add(num);
-            q1Sum += num;
+        for(int queue: queue1) {
+            sum += queue;
+            q1Sum += queue;
+            q1.add(queue);
+        }
+        for(int queue: queue2) {
+            sum += queue;
+            q2Sum += queue;
+            q2.add(queue);
         }
         
-        for(int num : queue2) {
-            q2.add(num);
-            q2Sum += num;
-        }
+        long half = sum / 2;
         
-        long half = (q1Sum + q2Sum) / 2;
-        //System.out.println(half);
-        
-        while(true) {
-            if (answer > (queue1.length + queue2.length) * 2) return -1; // 한바퀴 돌았는데도 
-            if (q1Sum == half) break;
-            
-            else if (q1Sum > half) {
-                int num = q1.poll();
-                q1Sum -= num;
-                q2.add(num);
+        int cnt = 0;
+        for(int i = 0; i < len; i++) {
+            if (q1Sum == q2Sum) {
+                answer = cnt;
+                break;
             }
             
-            else {
-                int num = q2.poll();
-                q1Sum += num;
-                q1.add(num);
+            // q1의 합이 현재 총합의 반보다 큰 경우
+            while(q1Sum > half) {
+                // q1의 원소를 계속 덜어내서 q2에 붙여주고, q1의 합은 빼준다.
+                int cur = q1.poll();
+                q2.add(cur);
+                q1Sum -= cur;
+                q2Sum += cur;
+                cnt++;
             }
-            answer++;
+            
+            while(q2Sum > half) {
+                int cur = q2.poll();
+                q1.add(cur);
+                q2Sum -= cur;
+                q1Sum += cur;
+                cnt++;
+            }
         }
         
         
