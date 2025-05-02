@@ -1,58 +1,63 @@
 import java.util.*;
 class Solution {
+    
     static int [] dx = {1,0,-1,0};
     static int [] dy = {0,1,0,-1};
     public int[] solution(String[][] places) {
-        int[] answer = new int[5];
+        int[] answer = new int[places.length];
         int idx = 0;
+        // 2차원 char 형태로 변환.
         for(String [] place : places) {
+            
             boolean flag = true;
-            for(int i = 0; i < 5; i++){
+            char[][] board = new char[5][5];
+            for(int i = 0; i < 5; i++) {
+                board[i] = place[i].toCharArray();
+            }
+            
+            for(int i = 0; i < 5; i++) {
                 for(int j = 0; j < 5; j++) {
-                    if (place[i].charAt(j) == 'P') {
-                        if (!bfs(place, i, j)) {
+                    if (board[i][j] == 'P') {
+                        if (!bfs(board,i,j)) {
                             flag = false;
-                            break;
+                            //break;
                         }
                     }
                 }
-                if (!flag) break;
             }
-            if (flag) answer[idx++] = 1;
-            else answer[idx++] = 0;
+            
+            if (flag) answer[idx] = 1;
+            else answer[idx] = 0;
+            idx++;
         }
-        
         return answer;
     }
     
-    public boolean bfs(String[] place, int i, int j) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{i,j});
+    public boolean bfs(char[][] board, int a, int b) {
+        boolean[][] visited = new boolean[5][5];
+        visited[a][b] = true;
         
-        boolean [][] visited = new boolean[5][5];
-        visited[i][j] = true;
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{a,b,0});
         
-        while(!queue.isEmpty()) {
-            int [] cur = queue.poll();
+        while(!q.isEmpty()) {
+            int [] cur = q.poll();
             int x = cur[0];
             int y = cur[1];
+            int dist = cur[2];
             
-            for(int dir = 0; dir < 4; dir++){
+            if (dist >= 2) continue;
+            
+            for(int dir = 0; dir < 4; dir++) {
                 int nx = x + dx[dir];
                 int ny = y + dy[dir];
-                if (nx < 0 || ny < 0 || nx >= 5 || ny >= 5 || visited[nx][ny]) continue;
+                if (nx < 0 || ny < 0 || nx >= 5 || ny >= 5) continue;
+                if (visited[nx][ny] || board[nx][ny] == 'X') continue;
                 
-                int dist = Math.abs(nx - i) + Math.abs(ny - j);
-                if (dist > 2) continue; // 거리가 2 이상일 땐 그냥 건너 뜀
+                if (dist <= 2 && board[nx][ny] == 'P') return false;
                 
-                if (place[nx].charAt(ny) == 'P') {
-                    return false;
-                }
-                
-                else if (place[nx].charAt(ny) == 'O') {
-                    visited[nx][ny] = true;
-                    queue.add(new int[]{nx,ny});
-                }
+                visited[nx][ny] = true;
+                q.add(new int[]{nx, ny, dist + 1});
             }
         }
         return true;
