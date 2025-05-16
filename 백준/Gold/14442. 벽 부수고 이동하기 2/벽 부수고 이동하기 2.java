@@ -6,47 +6,41 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n, m, k;
-    static int [][] board;
-    static boolean [][][] visited;
-    static int [][] dist;
+
     static int[] dx = {1, 0, -1, 0};
     static int[] dy = {0, 1, 0, -1};
-    static Queue<Point> q = new LinkedList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
 
-        board = new int[n][m];
-        dist = new int[n][m];
-        visited = new boolean[n][m][k+1]; // 0 ~ k개 벽 부숨
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
+        char[][] board = new char[n][m];
         for (int i = 0; i < n; i++) {
             String input = br.readLine();
             for (int j = 0; j < m; j++) {
-                board[i][j] = input.charAt(j) - '0';
-                dist[i][j] = -1;
+                board[i][j] = input.charAt(j);
             }
         }
 
-        visited[0][0][0] = true; // (0,0)은 항상 0
-        q.add(new Point(0, 0, 0));
-        dist[0][0] = 1;
-        bfs();
-    }
+        boolean[][][] visited = new boolean[n][m][k+1];
+        Queue<Point> q = new LinkedList<>();
 
-    public static void bfs() {
+        visited[0][0][0] = true;
+        q.add(new Point(0, 0, 0, 1));
+
+        // 1000 * 1000 * 10 * 4 = 4000 0000
         while (!q.isEmpty()) {
-            Point p = q.poll();
-            int x = p.x;
-            int y = p.y;
-            int cnt = p.cnt;
+            Point cur = q.poll();
+            int x = cur.x;
+            int y = cur.y;
+            int currentK = cur.cur; // 현재 벽을 부순 횟수.
+            int dist = cur.dist;
 
             if (x == n - 1 && y == m - 1) {
-                System.out.println(dist[x][y]);
+                System.out.println(dist);
                 return;
             }
 
@@ -54,41 +48,31 @@ public class Main {
                 int nx = x + dx[dir];
                 int ny = y + dy[dir];
                 if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
-
-                if (board[nx][ny] == 0) { // 빈칸일 때
-                    if (cnt < k && !visited[nx][ny][cnt]) { // k개 미만으로 부쉈을 때
-                        visited[nx][ny][cnt] = true;
-                        q.add(new Point(nx, ny, cnt));
-                    }
-
-                    else if (cnt == k && !visited[nx][ny][cnt]) { // k개 부쉈을 때
-                        visited[nx][ny][cnt] = true;
-                        q.add(new Point(nx, ny, cnt));
-                        // System.out.println(nx + " " + ny);
-                    }
+                if (board[nx][ny] == '0' && !visited[nx][ny][currentK]) {
+                    q.add(new Point(nx, ny, currentK, dist + 1));
+                    visited[nx][ny][currentK] = true;
                 }
 
-                else { // 벽인 경우
-                    if (cnt <= k && !visited[nx][ny][cnt]) { // k개 미만으로 부쉈을 때, 부수고 나아간다
-                        visited[nx][ny][cnt] = true;
-                        q.add(new Point(nx, ny, cnt + 1));
-                    }
+                else if (board[nx][ny] == '1' && currentK < k && !visited[nx][ny][currentK + 1]) {
+                    q.add(new Point(nx, ny, currentK + 1, dist + 1));
+                    visited[nx][ny][currentK + 1] = true;
                 }
-                dist[nx][ny] = dist[x][y] + 1;
-                // System.out.println("x: " + x + ", y: " + y + ", cnt: " + cnt);
             }
         }
+
         System.out.println(-1);
     }
 
     public static class Point {
         int x;
         int y;
-        int cnt;
-        public Point(int x, int y, int cnt) {
+        int cur;
+        int dist;
+        public Point(int x, int y, int cur, int dist) {
             this.x = x;
             this.y = y;
-            this.cnt = cnt;
+            this.cur = cur;
+            this.dist = dist;
         }
     }
 }
