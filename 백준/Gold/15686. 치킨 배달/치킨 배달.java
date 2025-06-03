@@ -7,11 +7,11 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int n, m;
-    static int [][] board;
-    static int [] arr;
-    static List<int[]> chickens = new ArrayList<>();
+    static int[][] board;
     static List<int[]> houses = new ArrayList<>();
-    static int min_total = Integer.MAX_VALUE;
+    static List<int[]> chickens = new ArrayList<>();
+    static int[] arr;
+    static int res = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,10 +20,9 @@ public class Main {
 
         board = new int[n][n];
         arr = new int[m];
-
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            for(int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++) {
                 board[i][j] = Integer.parseInt(st.nextToken());
                 if (board[i][j] == 1) houses.add(new int[]{i,j});
                 else if (board[i][j] == 2) chickens.add(new int[]{i,j});
@@ -31,38 +30,39 @@ public class Main {
         }
 
         dfs(0, 0);
-        System.out.println(min_total);
+        System.out.println(res);
     }
 
-    public static void dfs(int start, int depth) {
+    public static void dfs(int depth, int nxt) {
         if (depth == m) {
             cal();
+//            for(int i = 0; i < arr.length; i++) {
+//                System.out.print(arr[i] + " ");
+//            }
+//            System.out.println();
             return;
         }
 
-        for(int i = start; i < chickens.size(); i++) {
+        for(int i = nxt; i < chickens.size(); i++) {
             arr[depth] = i;
-            dfs(i + 1, depth + 1);
+            dfs(depth + 1, i + 1);
         }
     }
 
     public static void cal() {
-
-        int total = 0;
+        int d = 0;
         for(int [] house : houses) {
-            int x = house[0];
-            int y = house[1];
-            int min_dist = Integer.MAX_VALUE;
-            for(int idx : arr) {
-                int [] chicken = chickens.get(idx);
-                int nx = chicken[0];
-                int ny = chicken[1];
-                int dist = Math.abs(nx - x) + Math.abs(ny - y);
-                min_dist = Math.min(min_dist, dist);
+            int x1 = house[0];
+            int y1 = house[1];
+            int min = Integer.MAX_VALUE;
+            for(int i = 0; i < arr.length; i++) {
+                int x2 = chickens.get(arr[i])[0];
+                int y2 = chickens.get(arr[i])[1];
+                int dist = Math.abs(x1 - x2) + Math.abs(y1 - y2);
+                min = Math.min(min, dist);
             }
-            total += min_dist;
+            d += min;
         }
-        min_total = Math.min(min_total , total);
-        //System.out.println(total);
+        res = Math.min(d, res);
     }
 }
