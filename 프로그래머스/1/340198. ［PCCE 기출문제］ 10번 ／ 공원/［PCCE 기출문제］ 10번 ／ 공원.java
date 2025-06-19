@@ -7,20 +7,23 @@ class Solution {
         m = park[0].length;
         
         Arrays.sort(mats); 
-        for(int i = mats.length - 1; i >= 0; i--) {
-            int size = mats[i];
-            for(int x = 0; x <= n - size; x++) { // 3
-                for(int y = 0; y <= m - size; y++) { // 1
-                    if (isPossible(x,y,size,park)) return size;
+        for(int k = mats.length - 1; k >= 0; k--) { // 큰 돗자리부터 계산 (시간효율)
+            int x = mats[k]; // 돗자리 길이
+            
+            // 5일 땐 8번 수행되어야 함 
+            for(int i = x - 1; i < n; i++) {
+                for(int j = x - 1; j < m; j++) {
+                    //System.out.println("size: " + x + " " + i + " " + j);
+                    if (check(i, j, x, park)) return x;
                 }
             }
         }
         return -1;
     }
     
-    public boolean isPossible(int x, int y, int size, String[][] park) {
-        for(int i = x; i < x + size; i++) {
-            for(int j = y; j < y + size; j++) {
+    public boolean check(int x, int y, int size, String[][] park) {
+        for(int i = x; i >= x - size + 1; i--) {
+            for(int j = y; j >= y - size + 1; j--) {
                 if (!park[i][j].equals("-1")) return false;
             }
         }
