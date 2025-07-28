@@ -1,10 +1,9 @@
 -- 코드를 작성해주세요
-select sum(score) as SCORE, g.emp_no, emp_name, position, email
-from HR_EMPLOYEES e
-join HR_DEPARTMENT d
-on e.dept_id = d.dept_id
-join HR_GRADE g
-on e.emp_no = g.emp_no
-group by g.emp_no, e.emp_name, e.position, e.email
-order by SCORE desc
-limit 1
+SELECT SUM(SCORE) AS SCORE, G.EMP_NO, EMP_NAME, POSITION, EMAIL
+FROM HR_DEPARTMENT D
+JOIN HR_EMPLOYEES E ON D.DEPT_ID = E.DEPT_ID
+JOIN HR_GRADE G ON E.EMP_NO = G.EMP_NO
+WHERE YEAR = 2022
+GROUP BY EMP_NO
+ORDER BY SCORE DESC
+LIMIT 1
