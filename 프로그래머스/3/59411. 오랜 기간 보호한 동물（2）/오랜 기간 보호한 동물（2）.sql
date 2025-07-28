@@ -1,8 +1,6 @@
 -- 코드를 입력하세요
-SELECT i.animal_id, i.name
-from animal_ins i
-left join animal_outs o
-on i.animal_id = o.animal_id
-where o.animal_id is not null
-order by datediff(i.datetime, o.datetime)
-limit 2
+SELECT I.ANIMAL_ID, I.NAME
+FROM ANIMAL_INS I
+JOIN ANIMAL_OUTS O ON I.ANIMAL_ID = O.ANIMAL_ID
+ORDER BY DATEDIFF(O.DATETIME, I.DATETIME) DESC
+LIMIT 2
