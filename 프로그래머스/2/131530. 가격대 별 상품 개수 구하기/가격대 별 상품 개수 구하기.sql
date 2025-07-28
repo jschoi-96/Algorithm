@@ -1,5 +1,5 @@
 -- 코드를 입력하세요
-SELECT truncate(price, -4) as price_group, count(*) as products
-from product 
-group by price_group 
-order by price_group 
+SELECT TRUNCATE(price, -4) AS PRICE_GROUP, COUNT(*) AS PRODUCTS
+FROM PRODUCT 
+GROUP BY PRICE_GROUP
+ORDER BY PRICE_GROUP
