@@ -10,34 +10,18 @@ public class Main {
 
         String s = br.readLine();
 
-        if (m < 3) {
-            System.out.println(0);
-            return;
-        }
-
-        String base = "IOI";
-
-        n -= 1;
-        while(n > 0) {
-            base += "OI";
-            n--;
-        }
-
-        int len = base.length();
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < len; i++) {
-            sb.append(s.charAt(i));
-        }
-
         int res = 0;
-        if (base.equals(sb.toString())) res++;
+        int cnt = 0;
+        for(int i = 1; i < m - 1; i++) {
+            if (s.charAt(i-1) == 'I' && s.charAt(i) == 'O' && s.charAt(i+1) == 'I') {
+                cnt++; // IOI 개수 증가.
+                i++; // 다음 지점 탐색.
+            }
 
-        for(int i = len; i < m; i++) {
-            sb.deleteCharAt(0);
-            sb.append(s.charAt(i));
-            if (base.equals(sb.toString())) res++;
+            else cnt = 0;
+
+            if (cnt >= n) res++;
         }
-
         System.out.println(res);
     }
 }
